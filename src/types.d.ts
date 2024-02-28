@@ -1,6 +1,6 @@
 import { ActionType } from './constants';
 
-interface Params {
+export interface Params {
   ids?: ProductsIds;
   price?: number;
   offset?: number;

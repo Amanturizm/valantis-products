@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchProductsIds, fetchProducts } from './productsThunk';
-import { ProductsIds, Product } from '../../types';
+import { fetchProducts, fetchProductsIds } from './productsThunk';
+import { Product, ProductsIds } from '../../types';
 
 interface State {
   productsIds: ProductsIds;

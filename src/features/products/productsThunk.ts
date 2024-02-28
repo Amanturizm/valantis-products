@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
 import {
-  ProductsIds,
   ApiRequestBody,
-  ProductsIdsApiData,
   Product,
   ProductsApiData,
+  ProductsIds,
+  ProductsIdsApiData,
 } from '../../types';
 
 export const fetchProductsIds = createAsyncThunk<ProductsIds, ApiRequestBody>(
