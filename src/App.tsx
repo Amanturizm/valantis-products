@@ -1,11 +1,16 @@
+import AppToolbar from './components/AppToolbar';
 import Products from './features/products/Products';
 
-const App = () => {
-  return (
-    <div className="px-8">
+const App = () => (
+  <>
+    <header>
+      <AppToolbar />
+    </header>
+
+    <main className="px-8 mt-24">
       <Products />
-    </div>
-  );
-};
+    </main>
+  </>
+);
 
 export default App;

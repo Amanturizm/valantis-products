@@ -1,5 +1,3 @@
-import { Params } from './types';
-
 export const API_URL = 'http://api.valantis.store:40000/';
 
 export enum ActionType {
@@ -9,7 +7,4 @@ export enum ActionType {
   GET_FIELDS = 'get_fields',
 }
 
-export const DEFAULT_GET_PARAMS: Params = {
-  offset: 0,
-  limit: 50,
-};
+export const PRODUCTS_LENGTH = 50;
