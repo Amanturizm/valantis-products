@@ -6,6 +6,7 @@ interface State {
   productsIds: ProductsIds;
   products: Product[];
   productsLoading: boolean;
+  productsError: string | null;
   currentPage: number;
 }
 
@@ -13,10 +14,46 @@ const initialState: State = {
   productsIds: [],
   products: [],
   productsLoading: false,
+  productsError: null,
   currentPage: 0,
 };
 
-const filterArray = (arr: ProductsIds | Product[]): (string | Product)[] => {
+export const productsSlice = createSlice({
+  name: 'products',
+  initialState,
+  reducers: {
+    setCurrentPage: (state, { payload }: PayloadAction<'next' | 'prev'>) => {
+      if (payload === 'next') state.currentPage++;
+      if (payload === 'prev' && state.currentPage > 0) state.currentPage--;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchProductsIds.pending, (state) => {
+      state.productsLoading = true;
+    });
+    builder.addCase(fetchProductsIds.rejected, (state, { payload: error }) => {
+      state.productsError = error || null;
+      state.productsLoading = false;
+    });
+    builder.addCase(fetchProductsIds.fulfilled, (state, { payload }) => {
+      state.productsIds = filterArray(payload) as ProductsIds;
+    });
+
+    builder.addCase(fetchProducts.pending, (state) => {
+      state.productsLoading = true;
+    });
+    builder.addCase(fetchProducts.rejected, (state, { payload: error }) => {
+      state.productsError = error || null;
+      state.productsLoading = false;
+    });
+    builder.addCase(fetchProducts.fulfilled, (state, { payload }) => {
+      state.products = filterArray(payload) as Product[];
+      state.productsLoading = false;
+    });
+  },
+});
+
+function filterArray(arr: ProductsIds | Product[]): (string | Product)[] {
   const isStringArray: boolean = typeof arr[0] === 'string';
 
   const filteredArray = [...arr];
@@ -34,41 +71,7 @@ const filterArray = (arr: ProductsIds | Product[]): (string | Product)[] => {
   }
 
   return filteredArray;
-};
-
-export const productsSlice = createSlice({
-  name: 'products',
-  initialState,
-  reducers: {
-    setCurrentPage: (state, { payload }: PayloadAction<'next' | 'prev'>) => {
-      if (payload === 'next') state.currentPage++;
-      if (payload === 'prev' && state.currentPage > 0) state.currentPage--;
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchProductsIds.pending, (state) => {
-      state.productsLoading = true;
-    });
-    builder.addCase(fetchProductsIds.rejected, (state) => {
-      state.productsLoading = false;
-    });
-    builder.addCase(fetchProductsIds.fulfilled, (state, { payload }) => {
-      state.productsIds = filterArray(payload) as ProductsIds;
-      state.productsLoading = false;
-    });
-
-    builder.addCase(fetchProducts.pending, (state) => {
-      state.productsLoading = true;
-    });
-    builder.addCase(fetchProducts.rejected, (state) => {
-      state.productsLoading = false;
-    });
-    builder.addCase(fetchProducts.fulfilled, (state, { payload }) => {
-      state.products = filterArray(payload) as Product[];
-      state.productsLoading = false;
-    });
-  },
-});
+}
 
 export const productsReducer = productsSlice.reducer;
 export const { setCurrentPage } = productsSlice.actions;

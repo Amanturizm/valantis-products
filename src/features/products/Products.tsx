@@ -6,7 +6,9 @@ import ProductItem from '../../components/ProductItem';
 
 const Products = () => {
   const dispatch = useAppDispatch();
-  const { productsIds, products, currentPage } = useAppSelector((state) => state.products);
+  const { currentPage, productsIds, products, productsError } = useAppSelector(
+    (state) => state.products,
+  );
 
   useEffect(() => {
     dispatch(
@@ -15,13 +17,13 @@ const Products = () => {
         params: { offset: currentPage * PRODUCTS_LENGTH, limit: PRODUCTS_LENGTH },
       }),
     );
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage, productsError]);
 
   useEffect(() => {
     if (productsIds.length) {
       dispatch(fetchProducts({ action: ActionType.GET_ITEMS, params: { ids: productsIds } }));
     }
-  }, [dispatch, productsIds]);
+  }, [dispatch, productsIds, productsError]);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4 mb-8">
