@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/valantis-products/static/css/main.bdc71b0b.css",
-    "main.js": "/valantis-products/static/js/main.5f2435b4.js",
+    "main.js": "/valantis-products/static/js/main.5fe76e80.js",
     "static/media/reload.svg": "/valantis-products/static/media/reload.6dc2b3464382046d861399a828dfeecd.svg",
     "index.html": "/valantis-products/index.html",
     "static/media/copyright.svg": "/valantis-products/static/media/copyright.678db4528454ec15056d7a6ea19d74a9.svg",
@@ -9,10 +9,10 @@
     "static/media/magnifying-glass.svg": "/valantis-products/static/media/magnifying-glass.6507ab53097d23b3399654137f3912f4.svg",
     "static/media/arrow-right.svg": "/valantis-products/static/media/arrow-right.47033df573571fde72e184bb57539ff3.svg",
     "main.bdc71b0b.css.map": "/valantis-products/static/css/main.bdc71b0b.css.map",
-    "main.5f2435b4.js.map": "/valantis-products/static/js/main.5f2435b4.js.map"
+    "main.5fe76e80.js.map": "/valantis-products/static/js/main.5fe76e80.js.map"
   },
   "entrypoints": [
     "static/css/main.bdc71b0b.css",
-    "static/js/main.5f2435b4.js"
+    "static/js/main.5fe76e80.js"
   ]
 }
