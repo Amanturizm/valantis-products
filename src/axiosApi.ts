@@ -8,6 +8,13 @@ const axiosApi = axios.create({
 
 axiosApi.interceptors.request.use((config) => {
   const password = process.env.REACT_APP_PRODUCTS_API_PASSWORD;
+
+  if (!password) {
+    const message = 'No access to API';
+    console.error(message);
+    throw new Error(message);
+  }
+
   const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
   const authString = md5(`${password}_${timestamp}`);
 

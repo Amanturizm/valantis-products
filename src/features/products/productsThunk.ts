@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axiosApi from '../../axiosApi';
 import { isAxiosError } from 'axios';
+import axiosApi from '../../axiosApi';
 import {
   ApiRequestBody,
   Product,

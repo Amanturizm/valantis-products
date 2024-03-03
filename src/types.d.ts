@@ -2,9 +2,11 @@ import { ActionType } from './constants';
 
 export interface Params {
   ids?: ProductsIds;
-  price?: number;
-  offset?: number;
-  limit?: number;
+  offset?: number | null;
+  limit?: number | null;
+  price?: number | null;
+  product?: string | null;
+  brand?: string | null;
 }
 
 export interface ApiRequestBody {
@@ -28,3 +30,9 @@ export interface Product {
 }
 
 export type ProductsApiData = ApiResponseResult<Product[]>;
+
+export interface ProductsFilterFields {
+  product: string;
+  price: string;
+  brand: string;
+}

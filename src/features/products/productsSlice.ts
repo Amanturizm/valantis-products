@@ -1,21 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchProducts, fetchProductsIds } from './productsThunk';
+import { ActionType } from '../../constants';
 import { Product, ProductsIds } from '../../types';
 
 interface State {
-  productsIds: ProductsIds;
+  productsIds: ProductsIds | null;
   products: Product[];
   productsLoading: boolean;
   productsError: string | null;
   currentPage: number;
+  lastActionType: ActionType | null;
 }
 
 const initialState: State = {
-  productsIds: [],
+  productsIds: null,
   products: [],
   productsLoading: false,
   productsError: null,
   currentPage: 0,
+  lastActionType: null,
 };
 
 export const productsSlice = createSlice({
@@ -30,25 +33,41 @@ export const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchProductsIds.pending, (state) => {
       state.productsLoading = true;
+      state.productsError = null;
     });
-    builder.addCase(fetchProductsIds.rejected, (state, { payload: error }) => {
-      state.productsError = error || null;
+    builder.addCase(fetchProductsIds.rejected, (state, action) => {
+      state.productsError = action.payload || null;
       state.productsLoading = false;
+      state.lastActionType = action.meta.arg.action;
     });
-    builder.addCase(fetchProductsIds.fulfilled, (state, { payload }) => {
-      state.productsIds = filterArray(payload) as ProductsIds;
+    builder.addCase(fetchProductsIds.fulfilled, (state, action) => {
+      if (!action.payload.length) {
+        state.productsIds = null;
+        state.products = [];
+        state.productsLoading = false;
+      } else {
+        state.productsIds = filterArray(action.payload) as ProductsIds;
+      }
+
+      state.productsError = null;
+      state.lastActionType = action.meta.arg.action;
     });
 
     builder.addCase(fetchProducts.pending, (state) => {
       state.productsLoading = true;
+      state.productsError = null;
     });
-    builder.addCase(fetchProducts.rejected, (state, { payload: error }) => {
-      state.productsError = error || null;
+    builder.addCase(fetchProducts.rejected, (state, action) => {
+      state.productsError = action.payload || null;
       state.productsLoading = false;
+      state.lastActionType = action.meta.arg.action;
     });
-    builder.addCase(fetchProducts.fulfilled, (state, { payload }) => {
-      state.products = filterArray(payload) as Product[];
+    builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      state.products = filterArray(action.payload) as Product[];
+      state.productsIds = null;
       state.productsLoading = false;
+      state.productsError = null;
+      state.lastActionType = action.meta.arg.action;
     });
   },
 });

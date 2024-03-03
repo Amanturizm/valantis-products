@@ -7,7 +7,7 @@ const App = () => (
       <AppToolbar />
     </header>
 
-    <main className="px-8 mt-24">
+    <main className="px-4 mobile:px-8 pt-28">
       <Products />
     </main>
   </>
